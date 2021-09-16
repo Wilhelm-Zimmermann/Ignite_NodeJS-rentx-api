@@ -1,10 +1,10 @@
 import express from "express";
-import { categoriesRoutes } from "./routes/categories.routes";
+import { router } from "./routes";
 
 const app = express();
 
 app.use(express.json());
 
-app.use(categoriesRoutes);
+app.use(router);
 
 app.listen(8080, () => console.log("server is running on port 8080"));
