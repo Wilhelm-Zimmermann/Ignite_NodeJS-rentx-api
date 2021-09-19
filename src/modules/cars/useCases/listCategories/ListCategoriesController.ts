@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
+import { container } from "tsyringe";
 import { ListCategoriesUseCase } from "./ListCategoriesUseCase";
 
 
 class ListCategoriesController {
-    constructor(private listCategoryUseCase: ListCategoriesUseCase) { }
 
-    handle(req: Request, res: Response): Response {
-        const categories = this.listCategoryUseCase.execute();
+    async handle(req: Request, res: Response): Promise<Response> {
+        const listCategoryUseCase = container.resolve(ListCategoriesUseCase);
+        const categories = await listCategoryUseCase.execute();
 
         return res.status(200).json(categories);
     }
