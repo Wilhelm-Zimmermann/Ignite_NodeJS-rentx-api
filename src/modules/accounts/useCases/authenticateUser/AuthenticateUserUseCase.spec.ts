@@ -1,23 +1,33 @@
+import { DayJsProvider } from "../../../../shared/container/providers/dateProvider/implementations/DayJsProvider";
 import { AppError } from "../../../../shared/errors/AppError";
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 import { UsersRepositoryInMem } from "../../repositories/in-memory/UsersRepositoryInMem";
+import { UsersTokensRepositoryInMem } from "../../repositories/in-memory/UsersTokensRepositoryInMem";
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
 import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
 
 
-let authenticateUserUseCase : AuthenticateUserUseCase;
+let authenticateUserUseCase: AuthenticateUserUseCase;
 let createUserUseCase: CreateUserUseCase;
-let userRepository : UsersRepositoryInMem;
+let userTokenRepository: UsersTokensRepositoryInMem;
+let dateProvider : DayJsProvider;
+let userRepository: UsersRepositoryInMem;
 
 describe("Authenticate User", () => {
 
     beforeEach(() => {
         userRepository = new UsersRepositoryInMem();
-        authenticateUserUseCase = new AuthenticateUserUseCase(userRepository);
+        dateProvider = new DayJsProvider();
+        userTokenRepository = new UsersTokensRepositoryInMem();
+        authenticateUserUseCase = new AuthenticateUserUseCase(
+            userRepository,
+            userTokenRepository,
+            dateProvider,
+        );
         createUserUseCase = new CreateUserUseCase(userRepository);
     });
 
-    it("should be able to authenticate an user",async () => {
+    it("should be able to authenticate an user", async () => {
         const user: ICreateUserDTO = {
             driver_license: "09823094",
             email: "test@gmail.com",
@@ -35,30 +45,27 @@ describe("Authenticate User", () => {
         expect(result).toHaveProperty("token");
     });
 
-    it("should not be able to authenticate non existing user", () => {
-        expect(async () => {
-            await authenticateUserUseCase.execute({
-                email: "none@gmail.com",
-                password: "nonExists"
-            });
-        }).rejects.toBeInstanceOf(AppError);
+    it("should not be able to authenticate non existing user", async () => {
+        await expect(authenticateUserUseCase.execute({
+            email: "none@gmail.com",
+            password: "nonExists"
+        })
+        ).rejects.toEqual(new AppError("Email or Password invalid", 400));
     })
 
-    it("should not be able to authenticate with invalid password", () => {
-        expect(async () => {
-            const user: ICreateUserDTO = {
-                driver_license: "09823094",
-                email: "testNON@gmail.com",
-                password: "234",
-                name: "testst"
-            }
+    it("should not be able to authenticate with invalid password", async () => {
+        const user: ICreateUserDTO = {
+            driver_license: "09823094",
+            email: "testNON@gmail.com",
+            password: "234",
+            name: "testst"
+        }
 
-            createUserUseCase.execute(user);
-
-            await authenticateUserUseCase.execute({
-                email: user.email,
-                password: "12322222"
-            });
-        }).rejects.toBeInstanceOf(AppError);
+        createUserUseCase.execute(user);
+        await expect(authenticateUserUseCase.execute({
+            email: user.email,
+            password: "12322222"
+        })
+        ).rejects.toEqual(new AppError("Email or Password invalid", 400));
     });
 });

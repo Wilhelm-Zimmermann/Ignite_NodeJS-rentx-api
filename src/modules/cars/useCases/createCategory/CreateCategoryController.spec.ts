@@ -3,7 +3,7 @@ import { Connection } from "typeorm";
 import { hash } from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 import { app } from "../../../../shared/infra/http/app";
-import createConnection from "../../../../shared/infra/typeorm/database/"
+import createConnection from "../../../../shared/infra/typeorm/database"
 
 let connection: Connection
 
@@ -34,10 +34,10 @@ describe("Create category Controller", () => {
                 password: "admin"
             })
 
-        const { token } = responseToken.body;
+        const { refresh_token } = responseToken.body;
         const response = await request(app)
             .post("/categories")
-            .set({Authorization: `Bearer ${token}`})
+            .set({Authorization: `Bearer ${refresh_token}`})
             .send({
                 name: "SUPER TEST",
                 description: "This is a massive test"
@@ -54,10 +54,10 @@ describe("Create category Controller", () => {
                 password: "admin"
             })
 
-        const { token } = responseToken.body;
+        const { refresh_token } = responseToken.body;
         const response = await request(app)
             .post("/categories")
-            .set({Authorization: `Bearer ${token}`})
+            .set({Authorization: `Bearer ${refresh_token}`})
             .send({
                 name: "SUPER TEST",
                 description: "This is a massive test"

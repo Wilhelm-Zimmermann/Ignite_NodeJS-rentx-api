@@ -6,7 +6,6 @@ import { ICarsRepository } from "../ICarsRepository";
 
 class CarsRepositoryInMem implements ICarsRepository {
   
-   
     cars: Car[] = [];
 
     async create({
@@ -60,6 +59,12 @@ class CarsRepositoryInMem implements ICarsRepository {
 
     async findById(id: string):Promise<Car>{
         return this.cars.find(x => x.id === id);
+    }
+    
+    async updateAvailabe(id: string, avaiable: boolean): Promise<void> {
+        const car = this.cars.findIndex(x => x.id === id);
+
+        this.cars[car].avaiable = avaiable; 
     }
 }
 

@@ -1,7 +1,7 @@
 import { ConnectionNotFoundError, getConnection } from "typeorm"
 import { v4 as uuidv4 } from "uuid";
 import { hash } from "bcryptjs";
-import createConnection from "../";
+import createConnection from "..";
 
 async function create() {
     const connection = await createConnection("localhost");

@@ -13,6 +13,14 @@ import { IRentalsRepository } from "../../modules/rentals/repositories/IRentalsR
 import { IDateProvider } from "./providers/dateProvider/IDateProvider";
 import { DayJsProvider } from "./providers/dateProvider/implementations/DayJsProvider";
 import { RentalsRepository } from "../../modules/rentals/infra/typeorm/repositories/RentalsRepository";
+import { UsersTokensRepository } from "../../modules/accounts/infra/typeorm/repositories/UsersTokensRepository";
+import { IUsersTokensRepository } from "../../modules/accounts/repositories/IUsersTokensRepository";
+import { EtherealMailProvider } from "./providers/mailProvider/implementations/EtherealMailProvider";
+import { IMailProvider } from "./providers/mailProvider/IMailProvider";
+import { IStorageProvider } from "./providers/storageProvider/IStorageProvider";
+import { LocalStorageProvider } from "./providers/storageProvider/implementations/LocalStorageProvider";
+import { S3StorageProvider } from "./providers/storageProvider/implementations/S3StorageProvider";
+import { SesMailProvider } from "./providers/mailProvider/implementations/SesMailProvider";
 
 // ICategoriesRepository
 container.registerSingleton<ICategoriesRepository>(
@@ -50,3 +58,28 @@ container.registerSingleton<IDateProvider>(
     DayJsProvider
 );
 
+container.registerSingleton<IUsersTokensRepository>(
+    "UsersTokensRepository",
+    UsersTokensRepository
+);
+
+const mailProvider = {
+    ethereal: container.resolve(EtherealMailProvider),
+    ses: container.resolve(SesMailProvider)
+}
+
+container.registerInstance<IMailProvider>(
+    "MailProvider",
+    mailProvider[process.env.MAIL_PROVIDER]
+);
+
+const storage = {
+    local: LocalStorageProvider,
+    s3: S3StorageProvider
+}
+
+container.registerSingleton<IStorageProvider>(
+    "StorageProvider",
+    storage[process.env.DISK]
+);
+ 

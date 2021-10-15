@@ -6,5 +6,5 @@ interface ICreateUserDTO {
     id?: string;
     avatar?: string;
 }
-
+ 
 export { ICreateUserDTO };

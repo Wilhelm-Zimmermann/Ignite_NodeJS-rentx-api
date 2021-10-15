@@ -33,6 +33,13 @@ class RentalsRepositoryInMem implements IRentalsRepository{
 
         return rental;
     }
+    
+    async findById(id: string): Promise<Rental> {
+        return this.rentals.find(x => x.id === id);
+    }
+    async findByUserId(user_id: string): Promise<Rental[]> {
+        return this.rentals.filter(x => x.user_id === user_id);
+    }
 }
 
 export { RentalsRepositoryInMem };
