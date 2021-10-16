@@ -5,6 +5,7 @@ import "reflect-metadata";
 import swaggerUi from "swagger-ui-express";
 import swaggerFile from "../../../swagger.json";
 import createConnection from "../typeorm/database";
+import cors from "cors";
 import "../../container";
 import { router } from "./routes";
 import { AppError } from "../../errors/AppError";
@@ -12,6 +13,7 @@ import { AppError } from "../../errors/AppError";
 createConnection();
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 
