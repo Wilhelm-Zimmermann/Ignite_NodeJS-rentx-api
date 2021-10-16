@@ -1,4 +1,5 @@
 import { Router } from "express";
+import rateLimiter from "../middlewares/rateLimiter";
 import { authenticateRouter } from "./authenticate.routes";
 import { carRouter } from "./cars.routes";
 import { categoriesRoutes } from "./categories.routes";

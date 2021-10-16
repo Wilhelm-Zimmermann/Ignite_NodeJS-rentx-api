@@ -4,8 +4,8 @@
     "experimentalDecorators": true,                   /* Enable experimental support for TC39 stage 2 draft decorators. */
     "emitDecoratorMetadata": true,                    /* Emit design-type metadata for decorated declarations in source files. */
     "module": "commonjs",                                /* Specify what module code is generated. */
-    "rootDir": "./",                                  /* Specify the root folder within your source files. */
-    "baseUrl": "./src",                                  /* Specify the base directory to resolve non-relative module names. */
+    // "rootDir": "./",                                  /* Specify the root folder within your source files. */
+    // "baseUrl": "./src",                                  /* Specify the base directory to resolve non-relative module names. */
     "outDir": "./dist",                                   /* Specify an output folder for all emitted files. */
     "resolveJsonModule": true,                        /* Enable importing .json files */
     "declaration": true,                              /* Generate .d.ts files from TypeScript and JavaScript files in your project. */
@@ -14,12 +14,12 @@
     "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */
     "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
     "skipLibCheck": true  ,                               /* Skip type checking all .d.ts files. */
-    "paths": {
-        "@modules/*":["modules/*"],
-        "@config/*":["config/*"],
-        "@shared/*":["shared/*"],
-        "@errors/*":["errors/*"],
-        "@utils/*":["utils/*"]
-    },                         
+    // "paths": {
+    //     "@modules/*":["modules/*"],
+    //     "@config/*":["config/*"],
+    //     "@shared/*":["shared/*"],
+    //     "@errors/*":["errors/*"],
+    //     "@utils/*":["utils/*"]
+    // },                         
   }
 }

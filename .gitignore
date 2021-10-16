@@ -5,4 +5,5 @@ coverage
 .env
 !tmp/.gitkeep
 dist
+yarn-error.log
 ormconfig.json

@@ -2,9 +2,9 @@
     "type":"postgres",
     "port":"5432",
     "host":"localhost",
-    "username":"username",
-    "password":"password",
-    "database":"database",
+    "username":"docker",
+    "password":"ignite",
+    "database":"rentx",
     "entities":[
         "./src/modules/**/entities/*.ts"
     ],
